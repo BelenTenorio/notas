@@ -1,58 +1,103 @@
 import { useState } from "react";
 
 function App() {
+
+  //hooks : Funciones especificas de react todos comienzan con la palabra "use"
   
+    const [inputState,setInputState] = useState  ({
+      titulo: "",
+      fecha: "",
+      nota: "",
+    }); //VALOR INICIAL DEL STATE
+  
+    const handleInputChange = (event) => { 
+      //console.log(event.target);
+        setInputState({
+  
+          ...inputState,
+          [event.target.name]: event.target.value,
+      
+      });
+  
+    };
+  
+    const handleResetClick = ( ) => {
+      setInputState ({titulo: " ", fecha: " ", nota: " "});
+    };
 
-  const[InputState, setInputSTate] = useState({
-    titulo:"",
-    fecha: "",
-    nota:"",
-  });
-
-
-  const handleInputChange = (event) => {
-    setInputSTate({
-      ...InputState,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleResetClick = () => {
-    setInputSTate({titulo:"", fecha:"", nota:""});
-  } 
-
-  return (
-    <div className="App">
-      <h3>Notas</h3>
-      <label htmlFor='Nota'>Notas</label>
-
-      <input
-      id='nota' 
-      name='nota' 
-      type="text" 
-      onChange={handleInputChange}   
-      value={InputState.nota} ></input>
-    <label htmlFor='Fecha'>Fechas</label>
-      <input 
-      id='fecha' 
-      name='fecha' 
-      type="text" 
-      onChange={handleInputChange}   
-      value={InputState.fecha} ></input>
-      <label htmlFor='Titulo'>Titulo</label>
- 
-      <input 
-      id='titulo' 
-      name='titulo' 
-      type="text" 
-      onChange={handleInputChange}   
-      value={InputState.titulo} ></input>
-        <button type="button" class="btn btn-primary" onClick={handleResetClick}>
-        Eliminar
+    const handleClickGuardar = ( ) => {
+      console.log("Guardando")
+    };
+      
+    return (
+  
+      <div className="App container">
+        <div className="row">
+         <div className= "col">
+            <h3> LISTAS </h3>
+          </div>
+          <div className="col">
+            <h3> NOTAS </h3>
+          <label className = 'mb-2' > 
+  
+          TITULO 
+  
+          <input
+            id ="titulo" 
+            name="titulo" 
+            type="text"
+            onChange={handleInputChange}
+            value={inputState.titulo}
+          />
+        <br />
+        </label>
+  
+        <label htmlFor="fecha"> FECHA </label>
+  
+        <input 
+        id ="fecha" 
+        name="fecha" 
+        type="text"
+        onChange={handleInputChange}
+        value={inputState.fecha}
+  
+        /><label htmlFor="nota"> NOTA </label>
+  
+        <input 
+        id ="nota" 
+        name="nota" 
+        type="text"
+        onChange={handleInputChange}
+        value={inputState.nota}
+        />
+          
+          </div>
+        </div>
+        <hr />
+        <div className=" ms-2 mt-2">
+        <button 
+        type = "button" 
+        className ="btn btn-primary"
+        onClick={handleResetClick}
+        style= {{marginLeft: "1000px"}}
+        >
+          Limpiar
         </button>
-    </div>
-  );
+        <div> 
+        <button 
+        type = "button" 
+        className ="btn btn-primary"
+        onClick={handleClickGuardar}
+        style= {{marginLeft: "900px"}}
+        >
+          Guardar
+        </button>
+        </div>
 
+      </div>
+      </div>
   
-}
-export default App;
+    );
+  }
+  
+  export default App;
