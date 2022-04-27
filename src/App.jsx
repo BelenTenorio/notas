@@ -1,103 +1,106 @@
 import { useState } from "react";
-
 function App() {
+  //Declaración de state: "hooks"
+  const [inputState, setInputState] =  useState({
+    titulo: "",
+    fecha: "",
+    nota: "",
+  }); //valor inicial del State
 
-  //hooks : Funciones especificas de react todos comienzan con la palabra "use"
-  
-    const [inputState,setInputState] = useState  ({
-      titulo: "",
-      fecha: "",
-      nota: "",
-    }); //VALOR INICIAL DEL STATE
-  
-    const handleInputChange = (event) => { 
-      //console.log(event.target);
-        setInputState({
-  
-          ...inputState,
-          [event.target.name]: event.target.value,
-      
-      });
-  
-    };
-  
-    const handleResetClick = ( ) => {
-      setInputState ({titulo: " ", fecha: " ", nota: " "});
-    };
+  const handleInputChange= (event) => { 
+    setInputState({
+    ...inputState,
+    [event.target.name]: event.target.value,
+    });
+   };
+ //botón limpiar
+  const handleInputClean = () => { 
+    setInputState({
+        titulo: "",
+        fecha: "",
+        nota: "",
+    });
+   }; 
 
-    const handleClickGuardar = ( ) => {
-      console.log("Guardando")
-    };
-      
-    return (
-  
-      <div className="App container">
-        <div className="row">
-         <div className= "col">
-            <h3> LISTAS </h3>
-          </div>
-          <div className="col">
-            <h3> NOTAS </h3>
-          <label className = 'mb-2' > 
-  
-          TITULO 
-  
-          <input
-            id ="titulo" 
+   const handleClickGuardar = () =>{
+     localStorage.setItem("notas", JSON.stringify(inputState))
+   };
+
+  return (
+    <div className="App container">
+      <div className="row"> 
+        <div className="col"> 
+            <h3>Lista</h3> 
+        </div>
+        <div className="col">
+      <h3>Notas</h3>
+      <label className="mb-2" style={{ width:"100%" }}>
+        Título 
+          <input 
+            id="titulo" 
             name="titulo" 
-            type="text"
+            type="text" 
             onChange={handleInputChange}
             value={inputState.titulo}
-          />
-        <br />
-        </label>
-  
-        <label htmlFor="fecha"> FECHA </label>
-  
-        <input 
-        id ="fecha" 
-        name="fecha" 
-        type="text"
-        onChange={handleInputChange}
-        value={inputState.fecha}
-  
-        /><label htmlFor="nota"> NOTA </label>
-  
-        <input 
-        id ="nota" 
-        name="nota" 
-        type="text"
-        onChange={handleInputChange}
-        value={inputState.nota}
-        />
-          
-          </div>
-        </div>
-        <hr />
-        <div className=" ms-2 mt-2">
+            style={{ width:"100%" }} 
+            />
+      </label>   
+      <br />    
+      <label className="mb-2" style={{ width:"100%" }}>
+        Fecha
+          <input 
+            id="fecha" 
+            name="fecha" 
+            type="text" 
+            onChange={handleInputChange}
+            value={inputState.fecha} 
+            style={{ width:"100%" }}
+            />          
+      </label>
+      <br />
+      <label className="mb-2" style={{ width:"100%" }}>
+        Nota
+          <input 
+            id="nota" 
+            name="nota" 
+            type="text" 
+            onChange={handleInputChange}
+            value={inputState.nota} 
+            style={{ width:"100%" }}
+            />          
+      </label>
+      <hr />         
+    <div className="mt-2 me-2 mt-2 row">
+      <div className="col"> 
+      <span className="row me-1">
         <button 
-        type = "button" 
-        className ="btn btn-primary"
-        onClick={handleResetClick}
-        style= {{marginLeft: "1000px"}}
+            type="button"
+            className="btn btn-primary" 
+            onClick={handleInputClean}
         >
-          Limpiar
-        </button>
-        <div> 
+            Limpiar
+        </button> 
+      </span>
+      </div>
+    <div className="col">
+      <span className="row ms-1">   
         <button 
-        type = "button" 
-        className ="btn btn-primary"
-        onClick={handleClickGuardar}
-        style= {{marginLeft: "900px"}}
+            type="button" 
+            className="btn btn-primary" 
+            onClick={handleClickGuardar}
         >
-          Guardar
-        </button>
-        </div>
+        Guardar
+      </button>
+      </span>
+    </div>
 
-      </div>
-      </div>
-  
-    );
-  }
-  
-  export default App;
+    </div>      
+    </div>
+    </div>
+
+
+    </div>
+  );
+}
+
+export default App;
