@@ -22,8 +22,9 @@ function App() {
     });
    }; 
 
+   let arregloNotas = JSON.parse(localStorage.getItem("notas")) || [];
+
    const handleClickGuardar = () =>{
-    let arregloNotas = JSON.parse(localStorage.getItem("notas")) || [];
     arregloNotas.push(inputState);
     localStorage.setItem("notas", JSON.stringify(arregloNotas));
     handleInputClean();
@@ -34,6 +35,21 @@ function App() {
       <div className="row"> 
         <div className="col"> 
             <h3>Lista</h3> 
+            {
+              arregloNotas.length === 0 &&
+              "No hay notas"
+            }
+            {
+              arregloNotas.length !== 0 && ( 
+              <ol>
+              {arregloNotas.map((item)=>{
+                return(
+                <li> {item.titulo}({item.fecha}) 
+                </li> 
+                );
+              })}
+                </ol>
+            )}
         </div>
         <div className="col">
       <h3>Notas</h3>
