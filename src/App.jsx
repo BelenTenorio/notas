@@ -30,6 +30,18 @@ function App() {
     handleInputClean();
    };
 
+   const handleBorrarNota = (index) => {
+    const nuevoArreglo = [];
+    arregloNotas.ForEach((nota, i) => {
+      if (i !== index){
+        nuevoArreglo.push(nota);
+      }
+    });
+    localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
+    arregloNotas = [...nuevoArreglo];
+   };
+
+
   return (
     <div className="App container">
       <div className="row"> 
@@ -44,7 +56,14 @@ function App() {
               <ol>
               {arregloNotas.map((item)=>{
                 return(
-                <li> {item.titulo}({item.fecha}) 
+                <li> {item.titulo}({item.fecha})&nbsp;
+                <i class="bi bi-x-circle-fill"
+                onClick={handleBorrarNota}
+                style={{
+                  color: "red",
+                  fontSize: "0.75rem",
+                  cursor: "pointer",
+                }}></i>
                 </li> 
                 );
               })}
