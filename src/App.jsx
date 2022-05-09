@@ -7,6 +7,12 @@ function App() {
     nota: "",
   }); //valor inicial del State
 
+
+  const initialState = JSON.parse (localStorage.getItem("notas")) || [];
+
+  const [notas, setNotas] = useState(initialState);
+
+
   const handleInputChange= (event) => { 
     setInputState({
     ...inputState,
@@ -25,8 +31,8 @@ function App() {
    let arregloNotas = JSON.parse(localStorage.getItem("notas")) || [];
 
    const handleClickGuardar = () =>{
-    arregloNotas.push(inputState);
-    localStorage.setItem("notas", JSON.stringify(arregloNotas));
+    setNotas([...notas, inputState])
+    localStorage.setItem("notas", JSON.stringify(notas));
     handleInputClean();
    };
 
@@ -41,6 +47,10 @@ function App() {
     arregloNotas = [...nuevoArreglo];
    };
 
+   const handleClickLimpiarLista = () => {
+    setNotas([]);
+    localStorage.setItem("notas",JSON.stringify([]));
+  }
 
   return (
     <div className="App container">
@@ -69,6 +79,21 @@ function App() {
               })}
                 </ol>
             )}
+
+
+
+              <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleClickLimpiarLista}
+              disabled={notas.length === 0}
+              >
+                Limpiar Lista
+              </button>
+
+
+
+
         </div>
         <div className="col">
       <h3>Notas</h3>
@@ -126,6 +151,11 @@ function App() {
             type="button" 
             className="btn btn-primary" 
             onClick={handleClickGuardar}
+            disabled={
+              inputState.titulo === "" ||
+              inputState.fecha === "" ||
+              inputState.nota === "" 
+            }
         >
         Guardar
       </button>
